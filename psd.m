@@ -2,7 +2,7 @@ clear all
 clc
 
 % INITIALIZATION
-theta = 90;
+theta = 120;
 rotate_ang = theta;
 theta = (450 - theta) * pi / 180;
 joint0 = [0, 5];
@@ -135,14 +135,13 @@ while index < 202
 end
 
 % DRAW BONES AND SKINS
-f = figure(1);
+f = figure(2);
 p_bone0 = plot(bone0(1, :),bone0(2, :));
 hold on
 p_bone1 = plot(bone1(1, :),bone1(2, :));
 hold on
 xlim([-8 8]);
 ylim([-6 6]);
-index = 1;
 % plot(skin0_left(1, :),skin0_left(2, :))
 % hold on
 % plot(skin0_right(1, :),skin0_right(2, :))
