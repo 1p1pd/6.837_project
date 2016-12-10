@@ -2,7 +2,7 @@ clear all
 clc
 
 % INITIALIZATION
-theta = 80;
+theta = 90;
 rotate_ang = theta;
 theta = (450 - theta) * pi / 180;
 joint0 = [0, 5];
@@ -63,40 +63,54 @@ end
 trans = [cos(phi), -sin(phi), 0; sin(phi), cos(phi), 0; 0, 0, 1];
 d_180_left = zeros(3, 201);
 d_180_right = zeros(3, 201);
-d_90_left = zeros(3, 201);
-d_90_right = zeros(3, 201);
-d_30_left = zeros(3, 201);
-d_30_right = zeros(3, 201);
-[~, ~, skin_90_left, skin_90_right] = createPose(90, 5, 0.5, 100);
-[~, ~, skin_30_left, skin_30_right] = createPose(30, 5, 0.5, 100);
+d_140_left = zeros(3, 201);
+d_140_right = zeros(3, 201);
+d_100_left = zeros(3, 201);
+d_100_right = zeros(3, 201);
+d_60_left = zeros(3, 201);
+d_60_right = zeros(3, 201);
+d_20_left = zeros(3, 201);
+d_20_right = zeros(3, 201);
+[~, ~, skin_140_left, skin_140_right] = createPose(140, 5, 0.5, 100);
+[~, ~, skin_100_left, skin_100_right] = createPose(100, 5, 0.5, 100);
+[~, ~, skin_60_left, skin_60_right] = createPose(60, 5, 0.5, 100);
+[~, ~, skin_20_left, skin_20_right] = createPose(20, 5, 0.5, 100);
 index = 1;
 while index < 202
     w = weights(:, index);
     s_t = w(1) * eye(3) + w(2) * trans;
-    d_90_left(:, index) = s_t \ skin_90_left(:, index) - bind_left(:, index);
-    d_90_right(:, index) = s_t \ skin_90_right(:, index) - bind_right(:, index);
-    d_30_left(:, index) = s_t \ skin_30_left(:, index) - bind_left(:, index);
-    d_30_right(:, index) = s_t \ skin_30_right(:, index) - bind_right(:, index);
+    d_140_left(:, index) = s_t \ skin_140_left(:, index) - bind_left(:, index);
+    d_140_right(:, index) = s_t \ skin_140_right(:, index) - bind_right(:, index);
+    d_100_left(:, index) = s_t \ skin_100_left(:, index) - bind_left(:, index);
+    d_100_right(:, index) = s_t \ skin_100_right(:, index) - bind_right(:, index);
+    d_60_left(:, index) = s_t \ skin_60_left(:, index) - bind_left(:, index);
+    d_60_right(:, index) = s_t \ skin_60_right(:, index) - bind_right(:, index);
+    d_20_left(:, index) = s_t \ skin_20_left(:, index) - bind_left(:, index);
+    d_20_right(:, index) = s_t \ skin_20_right(:, index) - bind_right(:, index);
     index = index + 1;
 end
 
 % RBF INTERPOLATE
-c_1 = 30;
-c_2 = 90;
-c_3 = 180;
-w_left_x = zeros(3, 201);
-w_left_y = zeros(3, 201);
-w_right_x = zeros(3, 201);
-w_right_y = zeros(3, 201);
-phi_mat = [phi_func(30 - c_1) phi_func(30 - c_2) phi_func(30 - c_3);
-           phi_func(90 - c_1) phi_func(90 - c_2) phi_func(90 - c_3);
-           phi_func(180 - c_1) phi_func(180 - c_2) phi_func(180 - c_3)];
+c_1 = 20;
+c_2 = 60;
+c_3 = 100;
+c_4 = 140;
+c_5 = 180;
+w_left_x = zeros(5, 201);
+w_left_y = zeros(5, 201);
+w_right_x = zeros(5, 201);
+w_right_y = zeros(5, 201);
+phi_mat = [phi_func(20 - c_1) phi_func(20 - c_2) phi_func(20 - c_3) phi_func(20 - c_4) phi_func(20 - c_5);
+           phi_func(60 - c_1) phi_func(60 - c_2) phi_func(60 - c_3) phi_func(60 - c_4) phi_func(60 - c_5);
+           phi_func(100 - c_1) phi_func(100 - c_2) phi_func(100 - c_3) phi_func(100 - c_4) phi_func(100 - c_5);
+           phi_func(140 - c_1) phi_func(140 - c_2) phi_func(140 - c_3) phi_func(140 - c_4) phi_func(140 - c_5);
+           phi_func(180 - c_1) phi_func(180 - c_2) phi_func(180 - c_3) phi_func(180 - c_4) phi_func(180 - c_5)];
 index = 1;
 while index < 202
-    w_left_x(:, index) = phi_mat \ [d_30_left(1, index); d_90_left(1, index); d_180_left(1, index)];
-    w_left_y(:, index) = phi_mat \ [d_30_left(2, index); d_90_left(2, index); d_180_left(2, index)];
-    w_right_x(:, index) = phi_mat \ [d_30_right(1, index); d_90_right(1, index); d_180_right(1, index)];
-    w_right_y(:, index) = phi_mat \ [d_30_left(2, index); d_90_left(2, index); d_180_left(2, index)];
+    w_left_x(:, index) = phi_mat \ [d_20_left(1, index); d_60_left(1, index); d_100_left(1, index); d_140_left(1, index); d_180_left(1, index)];
+    w_left_y(:, index) = phi_mat \ [d_20_left(2, index); d_60_left(2, index); d_100_left(2, index); d_140_left(2, index); d_180_left(2, index)];
+    w_right_x(:, index) = phi_mat \ [d_20_right(1, index); d_60_right(1, index); d_100_right(1, index); d_140_right(1, index); d_180_right(1, index)];
+    w_right_y(:, index) = phi_mat \ [d_20_right(2, index); d_60_right(2, index); d_100_right(2, index); d_140_right(2, index); d_180_right(2, index)];
     index = index + 1;
 end
 
@@ -112,7 +126,7 @@ while index < 202
     w_l_y = w_left_y(:, index);
     w_r_x = w_right_x(:, index);
     w_r_y = w_right_y(:, index);
-    rbf_basis = [phi_func(rotate_ang - c_1) phi_func(rotate_ang - c_2) phi_func(rotate_ang - c_3)];
+    rbf_basis = [phi_func(rotate_ang - c_1) phi_func(rotate_ang - c_2) phi_func(rotate_ang - c_3) phi_func(rotate_ang - c_4) phi_func(rotate_ang - c_5)];
     d_left = [rbf_basis * w_l_x; rbf_basis * w_l_y; 0];
     d_right = [rbf_basis * w_r_x; rbf_basis * w_r_y; 0];
     ssd_left(:,index) = s_t * (bind_left(:, index) + d_left);
