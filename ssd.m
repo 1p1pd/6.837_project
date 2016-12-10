@@ -1,6 +1,8 @@
 clear all
 clc
-theta = 30;
+
+% INITIALIZATION
+theta = 150;
 theta = (450 - theta) * pi / 180;
 joint0 = [0, 5];
 joint1 = [0, 0];
@@ -13,6 +15,8 @@ skin1_left = zeros(3, 101);
 skin1_right = zeros(3, 101);
 bind_left = zeros(3, 201);
 bind_right = zeros(3, 201);
+
+% DEFINE BONES
 index = 1;
 while index < 102
     bone0(:,index) = [0, 5 * (101 - index) / 100, 1];
@@ -35,10 +39,10 @@ while index < 102
     skin1_right(:,index) = trans * skin0_right(:,index);
     index = index + 1;
 end
-figure(1)
-plot(bone0(1, :),bone0(2, :))
+f = figure(1);
+p_bone0 = plot(bone0(1, :),bone0(2, :));
 hold on
-plot(bone1(1, :),bone1(2, :))
+p_bone1 = plot(bone1(1, :),bone1(2, :));
 hold on
 xlim([-8 8]);
 ylim([-6 6]);
@@ -51,6 +55,8 @@ index = 1;
 % hold on
 % plot(skin1_right(1, :),skin1_right(2, :))
 % hold on
+
+% DEFINE WEIGHTS
 weights = zeros(2, 201);
 index = 1;
 fraction = 80;
@@ -67,6 +73,8 @@ while index < 202
     end
     index = index + 1;
 end
+
+% SSD
 ssd_left = zeros(3, 201);
 ssd_right = zeros(3, 201);
 trans = [cos(phi), -sin(phi), 0; sin(phi), cos(phi), 0; 0, 0, 1];
@@ -78,8 +86,7 @@ while index < 202
     ssd_right(:,index) = s_t * bind_right(:, index);
     index = index + 1;
 end
-plot(ssd_left(1, :), ssd_left(2, :))
+p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :));
 hold on
-plot(ssd_right(1, :), ssd_right(2, :))
+p_ssd_right = plot(ssd_right(1, :), ssd_right(2, :));
 hold on
-
