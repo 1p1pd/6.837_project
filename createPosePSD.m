@@ -61,16 +61,16 @@ function [bone0, bone1, skin_left, skin_right] = createPosePSD(theta, L, W, N)
     end
     
     % DRAW BONES AND SKINS 
-    figure(3);
-    plot(bone0(1, :),bone0(2, :));
-    hold on
-    plot(bone1(1, :),bone1(2, :));
-    hold on
-    xlim([-8 8]);
-    ylim([-6 6]);
-    plot(skin_left(1, :), skin_left(2, :));
-    hold on
-    plot(skin_right(1, :), skin_right(2, :));
-    hold on
+%     figure(3);
+%     plot(bone0(1, :),bone0(2, :));
+%     hold on
+%     plot(bone1(1, :),bone1(2, :));
+%     hold on
+%     xlim([-8 8]);
+%     ylim([-6 6]);
+%     plot(skin_left(1, :), skin_left(2, :));
+%     hold on
+%     plot(skin_right(1, :), skin_right(2, :));
+%     hold on
 
 end
