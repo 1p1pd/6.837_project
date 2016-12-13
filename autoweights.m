@@ -129,7 +129,7 @@ ylim([-6 6]);
 % hold on
 % plot(skin1_right(1, :),skin1_right(2, :))
 % hold on
-p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :));
+p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :), 'LineWidth', 2);
 hold on
 p_ssd_right = plot(ssd_right(1, :), ssd_right(2, :));
 hold on

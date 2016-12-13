@@ -150,7 +150,7 @@ hold on
 p_bone1 = plot(bone1(1, :),bone1(2, :));
 hold on
 xlim([-8 8]);
-ylim([-6 6]);
+ylim([-7 6]);
 index = 1;
 % plot(skin0_left(1, :),skin0_left(2, :))
 % hold on
@@ -160,9 +160,9 @@ index = 1;
 % hold on
 % plot(skin1_right(1, :),skin1_right(2, :))
 % hold on
-p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :));
+p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :), 'LineWidth', 2);
 hold on
-p_ssd_right = plot(ssd_right(1, :), ssd_right(2, :));
+p_ssd_right = plot(ssd_right(1, :), ssd_right(2, :), 'LineWidth', 2);
 hold on
 
 h = uicontrol('Parent',f,'Style','slider','Position',[81,54,419,23],...
@@ -323,7 +323,7 @@ function sliderCallback(es,ed)
     p_bone1 = plot(bone1(1, :),bone1(2, :));
     hold on
     xlim([-8 8]);
-    ylim([-6 6]);
+    ylim([-7 6]);
     index = 1;
     % plot(skin0_left(1, :),skin0_left(2, :))
     % hold on
@@ -333,8 +333,8 @@ function sliderCallback(es,ed)
     % hold on
     % plot(skin1_right(1, :),skin1_right(2, :))
     % hold on
-    p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :));
+    p_ssd_left = plot(ssd_left(1, :), ssd_left(2, :), 'LineWidth', 2);
     hold on
-    p_ssd_right = plot(ssd_right(1, :), ssd_right(2, :));
+    p_ssd_right = plot(ssd_right(1, :), ssd_right(2, :), 'LineWidth', 2);
     hold on
 end
