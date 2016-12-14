@@ -2,7 +2,7 @@ clear all
 clc
 
 % INITIALIZATION
-theta = 180;
+theta = 20;
 rotate_ang = theta;
 theta = (450 - theta) * pi / 180;
 joint0 = [0, 5];

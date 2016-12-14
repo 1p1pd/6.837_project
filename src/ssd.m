@@ -2,7 +2,7 @@ clear all
 clc
 
 % INITIALIZATION
-theta = 40;
+theta = 160;
 theta = (450 - theta) * pi / 180;
 joint0 = [0, 5];
 joint1 = [0, 0];

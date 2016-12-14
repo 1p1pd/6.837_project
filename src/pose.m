@@ -22,11 +22,11 @@ function [skin_left, skin_right] = pose(theta)
         skin_right(:, index) = trans * (skin_right(:, index - 201 + f) - [0; 10 - (f - 1) * 0.05; 0]);
         index = index + 1;
     end
-%     figure(1);
-%     plot(skin_left(1, :),skin_left(2, :));
-%     hold on
-%     plot(skin_right(1, :),skin_right(2, :));
-%     hold on
-%     xlim([-8 8]);
-%     ylim([-6 6]);
+    figure(1);
+    plot(skin_left(1, :),skin_left(2, :));
+    hold on
+    plot(skin_right(1, :),skin_right(2, :));
+    hold on
+    xlim([-8 8]);
+    ylim([-6 6]);
 end
