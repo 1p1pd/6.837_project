@@ -60,11 +60,6 @@ More advanced example-based skinning methods like PSD tackle these issues by usi
 
 Both SSD and PSD rely on joint weights to be defined for each vertex on the skin, in order to bind the skin mesh to the bone hierarchy. A method of computing joint weights from samples using a least-squares based estimation has been shown in \cite{wang2002multi, mohr2003direct}. We referenced the least-squares estimation as described in \cite{rhee2006real, wang2002multi, mohr2003direct} to reimplement the method in this paper.
 
-%------------------------------------------------------------------------
-\section{Related Work}
-
-Weighted pose space deformation (WPSD) is an even more advanced example-based skinning method, which were derived from a hand model using medical images \cite{kurihara2004modeling}. WPSD is able to generate realistic skinning even with a limited number of poses. Lewis \cite{rhee2006real} expands on this method by implementing parallel WPSD using fragment processors. This approach only works for poses with more than one degree of freedom, so we were not able to implement WPSD with the examples used for this paper.
-
 \begin{figure*}
 \begin{center}
 \fbox{\includegraphics[width=0.15\linewidth]{pose180.png}}
@@ -77,6 +72,11 @@ Weighted pose space deformation (WPSD) is an even more advanced example-based sk
 \label{fig:short}
 \label{poses}
 \end{figure*}
+
+%------------------------------------------------------------------------
+\section{Related Work}
+
+Weighted pose space deformation (WPSD) is an even more advanced example-based skinning method, which were derived from a hand model using medical images \cite{kurihara2004modeling}. WPSD is able to generate realistic skinning even with a limited number of poses. Lewis \cite{rhee2006real} expands on this method by implementing parallel WPSD using fragment processors. This approach only works for poses with more than one degree of freedom, so we were not able to implement WPSD with the examples used for this paper.
 
 %------------------------------------------------------------------------
 \section{Methodology}
@@ -144,7 +144,7 @@ We use Gaussian radial basis function as following
 \begin{align} \phi(x) = e^{-(\epsilon x)^2} \end{align}
 where $x$ is the distance. In our implementation, we use the difference in degrees.
 
-Gaussian function converges to 0 very quick, which ensures that displacements at an angle $\theta$ will not be affected greatly by displacements at extreme angles e.g. $20^{\circ}$. At the same time, we set $\epsilon$ to be fairly small so that it will not converge to 0 so quickly. By doing so, we are able to interpolate displacements for any arbitrary angle smoothly.
+Gaussian function converges to 0 very quickly, which ensures that displacements at an angle $\theta$ will not be affected greatly by displacements at extreme angles, e.g. at $20^{\circ}$. At the same time, we set $\epsilon$ to be fairly small so that it would not converge to 0 too quickly. By doing so, we were able to interpolate displacements for any arbitrary angle smoothly.
 
 In our implementation, we calculated $\lambda_k$ on the fly. This is done by solving a linear system 
 \begin{equation}
@@ -156,11 +156,11 @@ where displacements vector for each predefined pose $D$ is pre-computed and $\bo
 \section{Computing joint weights from samples}
 The joint weights of each vertex are important to generate accurate skinning in SSD (equation \ref{ssd_eq}). The joint weights of each vertex can be automatically calculated from the sample poses to enhance the accuracy of the weight value. This should result in better skinning and reduces the elaborate manual work required to create weight maps.
 
-In each sample pose $p_k$ , we have following equation based on SSD:
+In each sample pose $p_k$, we have following equation based on SSD:
 \begin{equation}
 	\tilde{v_k}-e_k=(\sum_{j=1}^{n_{joint}}w_jT_j)v_0
 \end{equation}
-where $\tilde{v_k}$ is a particular vertex from skin sample $k$, the right hand side is the SSD deformation of vertex $v_0$ from the rest pose, $e_k$ is a displacement between the SSD deformation and $\tilde{v_k}$.
+where $\tilde{v_k}$ is a particular vertex from skin sample $k$, the right hand side is the SSD deformation of vertex $v_0$ from the rest pose, and $e_k$ is a displacement between the SSD deformation and $\tilde{v_k}$.
 If we have sufficient examples involving the same set of $n_{joint}$ joints, we have $n_{pose}$ equations of the form:
 \begin{equation}
 	\tilde{v_k}-e_k=\sum_{j=1}^{n_{joint}}v_jw_j
@@ -169,7 +169,7 @@ where $v_j$is $v_0$ transformed by $T_j$. We can minimize the error $e_k$ using 
 \begin{equation}
 	\Arrowvert\boldsymbol{v}-\boldsymbol{Aw}\Arrowvert^2
 \end{equation}
-where $\boldsymbol{w}$ is a weight vector, $\boldsymbol{v}$ is the predefined pose vertex vector and $\boldsymbol{A}$ is a transformed vertex matrix. Finally, weights are scaled to ensure that they sum up to 1.
+where $\boldsymbol{w}$ is a weight vector, $\boldsymbol{v}$ is the predefined pose vertex vector, and $\boldsymbol{A}$ is a transformed vertex matrix. Finally, weights are scaled to ensure that they sum up to 1.
 
 %------------------------------------------------------------------------
 \section{Results}
@@ -180,9 +180,9 @@ The results of PSD are shown in Figure \ref{psd_r}. (A YouTube video showing the
 
 The results of the computed joint weights are shown in Figure \ref{com_w}. The results do not look good because the least squares by subspace projection can produce weights that are less than 0 or greater than 1, in which case the outcome will not converge.
 
-Another disadvantage of SSD is it cannot handle rotation in 3D. The skin is collapsing while rotating. However, by defining poses for different rotation angles, PSD can solve this problem easily.
+Another disadvantage of SSD is it cannot handle rotation in 3D. The skin collapses while rotating. However, by defining poses for different rotation angles, PSD can solve this problem easily.
 
-PSD also will not be a burden on computing. In our system, coefficients for radial basis are computed on the fly while it only takes $20\%$ more time than SSD. Lewis \cite{rhee2006real} tried to do real-time PSD for large meshed on GPU, which makes it even faster. 
+PSD also is not computationally expensive. In our system, coefficients for the radial basis function are computed on the fly while it only takes $20\%$ more time than SSD. Lewis \cite{rhee2006real} tried to do real-time PSD for large meshed on GPU, which makes it even faster. 
 
 \begin{figure}[t]
 \begin{center}
@@ -199,9 +199,9 @@ PSD also will not be a burden on computing. In our system, coefficients for radi
 
 We were able to show the shortcomings of SSD at sharp angles and also demonstrate that, with appropriately defined example poses and appropriately chosen parameters for the radial basis function, PSD can fix those issues and produce smooth skinning.
 
-In our simple two-bone system there are only 1 DOF so that we cannot implement WPSD \cite{kurihara2004modeling}. We can expand our system to 3D and add more DOFs. Then we can try to interpolate facial expression or to skin more arbitrary poses for animals. 
+In our simple two-bone system there was only one degree of freedom (DOF) so we could not implement WPSD \cite{kurihara2004modeling}. We can expand our system to 3D and add more DOFs. Then we can try to interpolate facial expression or to skin more arbitrary poses for characters. 
 
-We should also try the non-negative least square (NNLS) method instead of subspace projection, which may produce converged SSD and WPSD outcome.
+We could also try to implement the non-negative least square (NNLS) method instead of subspace projection, which may produce converged SSD and WPSD outcome.
 
 PSD unifies two techniques that have been common in computer graphics. It uses a relatively simple algorithm and can handle a wide variety of deformations from a simple elbow in our example to secondary animation. The setup cost of the algorithm is insignificant, and the synthesis cost is only slightly more than that of shape interpolation.
 
