@@ -1,0 +1,42 @@
+\begin{thebibliography}{1}
+
+\bibitem{magnenat1988joint}
+Nadia Magnenat-Thalmann, Richard Laperrire, and Daniel Thalmann.
+\newblock Joint-dependent local deformations for hand animation and object
+  grasping.
+\newblock In {\em In Proceedings on Graphics interface'88}. Citeseer, 1988.
+
+\bibitem{lewis2000pose}
+John~P Lewis, Matt Cordner, and Nickson Fong.
+\newblock Pose space deformation: a unified approach to shape interpolation and
+  skeleton-driven deformation.
+\newblock In {\em Proceedings of the 27th annual conference on Computer
+  graphics and interactive techniques}, pages 165--172. ACM
+  Press/Addison-Wesley Publishing Co., 2000.
+
+\bibitem{rhee2006real}
+Taehyun Rhee, John~P Lewis, and Ulrich Neumann.
+\newblock Real-time weighted pose-space deformation on the gpu.
+\newblock In {\em Computer Graphics Forum}, volume~25, pages 439--448. Wiley
+  Online Library, 2006.
+
+\bibitem{wang2002multi}
+Xiaohuan~Corina Wang and Cary Phillips.
+\newblock Multi-weight enveloping: least-squares approximation techniques for
+  skin animation.
+\newblock In {\em Proceedings of the 2002 ACM SIGGRAPH/Eurographics symposium
+  on Computer animation}, pages 129--138. ACM, 2002.
+
+\bibitem{mohr2003direct}
+Alex Mohr, Luke Tokheim, and Michael Gleicher.
+\newblock Direct manipulation of interactive character skins.
+\newblock In {\em Proceedings of the 2003 symposium on Interactive 3D
+  graphics}, pages 27--30. ACM, 2003.
+
+\bibitem{kurihara2004modeling}
+Tsuneya Kurihara and Natsuki Miyata.
+\newblock Modeling deformable human hands from medical images.
+\newblock In {\em Proceedings of the 2004 ACM SIGGRAPH/Eurographics symposium
+  on Computer animation}, pages 355--363. Eurographics Association, 2004.
+
+\end{thebibliography}
